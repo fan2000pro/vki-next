@@ -3,18 +3,23 @@
 import useStudents from '@/hooks/useStudents';
 import type StudentInterface from '@/types/StudentInterface';
 import styles from './Students.module.scss';
+import Student from './Student/Student';
+import { deleteStudentDb } from '@/db/studentDb';
 
 const Students = (): React.ReactElement => {
-  const { students } = useStudents();
+  const { students, deleteStudentMutate } = useStudents();
 
+  const handleDeleteStudent = (studentId: number): void =>{
+    deleteStudentMutate(studentId);
+  };
   return (
     <div className={styles.Students}>
       {students.map((student: StudentInterface) => (
-        <h2 key={student.id}>
-          {student.first_name}
-          {student.last_name}
-          {student.middle_name}
-        </h2>
+        <Student
+          key={student.id}
+          student={student}
+          onDelete={handleDeleteStudent}
+        />
       ))}
     </div>
   );
