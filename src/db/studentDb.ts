@@ -105,7 +105,7 @@ export const addStudentDb = async (
           db.close();
           return;
         }
-        // this.lastID доступен только в обычной функции, не стрелочной
+        
         resolve(this.lastID as number);
         db.close();
       },
