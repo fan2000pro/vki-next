@@ -41,7 +41,7 @@ export interface AddStudentPayload {
 }
 
 export const addStudentApi = async (payload: AddStudentPayload): Promise<StudentInterface | null> => {
-  try {
+  // try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API}students`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -53,9 +53,9 @@ export const addStudentApi = async (payload: AddStudentPayload): Promise<Student
     }
     const student = await response.json() as StudentInterface;
     return student;
-  }
-  catch (err) {
-    console.log('>>> addStudentApi', err);
-    return null;
-  }
+  //}
+  // catch (err) {
+  //   console.log('>>> addStudentApi', err);
+  //   return null;
+  // }
 };

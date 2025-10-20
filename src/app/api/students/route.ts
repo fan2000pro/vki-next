@@ -11,7 +11,7 @@ export async function GET(): Promise<Response> {
 };
 
 export async function POST(request: Request): Promise<Response> {
-  try {
+  // try {
     const body = await request.json();
     const { firstName, lastName, middleName, groupId } = body ?? {};
 
@@ -22,7 +22,13 @@ export async function POST(request: Request): Promise<Response> {
       });
     }
 
-    const student = await addStudentDb(firstName, lastName, middleName, Number(groupId ?? 1));
+    const student = await addStudentDb({
+      firstName,
+      lastName,
+      middleName,
+      groupId: Number(groupId ?? 1),
+      contacts: '',
+    });
 
     return new Response(JSON.stringify(student), {
       status: 201,
@@ -30,8 +36,8 @@ export async function POST(request: Request): Promise<Response> {
         'Content-Type': 'application/json',
       },
     });
-  }
-  catch (e) {
-    return new Response(JSON.stringify({ message: 'Server error' }), { status: 500 });
-  }
+  // }
+  // catch (e) {
+  //   return new Response(JSON.stringify({ message: 'Server error' }), { status: 500 });
+  // }
 };
