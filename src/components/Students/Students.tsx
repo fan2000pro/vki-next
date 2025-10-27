@@ -10,9 +10,16 @@ const Students = (): React.ReactElement => {
   const { students, deleteStudentMutate, addStudentMutate } = useStudents();
 
   const handleDeleteStudent = (studentId: number): void =>{
+    if (confirm ('удалить студента?'))
+    {
+      debugger;
+      console.log('onDeleteHandler', studentId);
+    }
     deleteStudentMutate(studentId);
   };
   const handleAddStudent = (values: { firstName: string; lastName: string; middleName: string }): void => {
+    debugger;
+    console.log('Добавление студетна', values);
     addStudentMutate({ ...values });
   };
   return (
