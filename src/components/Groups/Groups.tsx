@@ -10,9 +10,23 @@ const Groups = (): React.ReactElement => {
   return (
     <div className={styles.Groups}>
       {groups.map((group: GroupInterface) => (
-        <h2 key={group.id}>
-          {group.name}
-        </h2>
+        <div key={group.id} className={styles.Group}>
+          <h2>{group.name}</h2>
+          {group.students && group.students.length > 0 ? (
+            <div className={styles.StudentsList}>
+              <h3>Студенты:</h3>
+              <ul>
+                {group.students.map((student) => (
+                  <li key={student.id}>
+                    {student.lastName} {student.firstName} {student.middleName}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : (
+            <p>Нет студентов в группе</p>
+          )}
+        </div>
       ))}
     </div>
   );

@@ -3,6 +3,23 @@
   display: grid;
   gap: 10px;
   grid-template-columns: 370px auto;
+  align-items: center;
+}
+
+.StudentLink {
+  text-decoration: none;
+  color: var(--color);
+  
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.GroupName {
+  color: var(--color);
+  opacity: 0.7;
+  font-size: 0.9em;
+  margin-left: 10px;
 }
 
 .--isDeleted {

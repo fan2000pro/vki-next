@@ -17,7 +17,7 @@ const Students = (): React.ReactElement => {
     }
     deleteStudentMutate(studentId);
   };
-  const handleAddStudent = (values: { firstName: string; lastName: string; middleName: string }): void => {
+  const handleAddStudent = (values: { firstName: string; lastName: string; middleName: string; groupId: number }): void => {
     debugger;
     console.log('Добавление студетна', values);
     addStudentMutate({ ...values });
