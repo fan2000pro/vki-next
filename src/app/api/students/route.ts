@@ -1,4 +1,4 @@
-import { addStudentDb, getStudentsDb } from '@/db/studentDb';
+import { addStudentDb, getStudentsDb, getStudentByIdDb } from '@/db/studentDb';
 
 export async function GET(): Promise<Response> {
   const students = await getStudentsDb();
@@ -29,8 +29,9 @@ export async function POST(request: Request): Promise<Response> {
       groupId: Number(groupId ?? 1),
       contacts: '',
     });
+    const studentWithGroup = await getStudentByIdDb(student.id);
 
-    return new Response(JSON.stringify(student), {
+    return new Response(JSON.stringify(studentWithGroup ?? student), {
       status: 201,
       headers: {
         'Content-Type': 'application/json',
