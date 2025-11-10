@@ -35,6 +35,8 @@ const useStudents = (): StudentsHookInterface => {
       // получаем данные из TanStackQuery
       const previousStudents = queryClient.getQueryData<StudentInterface[]>(['students']);
       let updatedStudents = [...(previousStudents ?? [])] ;
+      // сохраним текущие группы для возможного отката
+      const previousGroups = queryClient.getQueryData<GroupInterface[]>(['groups']);
 
       if (!updatedStudents) return;
 
@@ -46,15 +48,27 @@ const useStudents = (): StudentsHookInterface => {
       // обновляем данные в TanStackQuery
       queryClient.setQueryData<StudentInterface[]>(['students'], updatedStudents);
 
+      // Оптимистично убираем студента из соответствующей группы в кэше ['groups']
+      if (previousGroups) {
+        const updatedGroups = previousGroups.map((g) => ({
+          ...g,
+          students: (g.students ?? []).filter((s) => s.id !== studentId),
+        }));
+        queryClient.setQueryData<GroupInterface[]>(['groups'], updatedGroups);
+      }
+
       console.log('deleteStudentMutate onMutate', previousStudents, updatedStudents);
       debugger;
       
-      return { previousStudents, updatedStudents };
+      return { previousStudents, updatedStudents, previousGroups };
     },
     onError: (err, variables, context) => {
       console.log('deleteStudentMutate  err', err);
       debugger;
       queryClient.setQueryData<StudentInterface[]>(['students'], context?.previousStudents);
+      if (context?.previousGroups) {
+        queryClient.setQueryData<GroupInterface[]>(['groups'], context.previousGroups);
+      }
     },
     // обновляем данные в случаи успешного выполнения mutationFn: async (studentId: number) => deleteStudentApi(studentId),
     onSuccess: async (studentId, variables, { previousStudents }) => {
@@ -71,6 +85,16 @@ const useStudents = (): StudentsHookInterface => {
       }
       const updatedStudents = previousStudents.filter((student: StudentInterface) => student.id !== studentId);
       queryClient.setQueryData<StudentInterface[]>(['students'], updatedStudents);
+
+      // Финально убираем студента из групп в кэше
+      const groupsNow = queryClient.getQueryData<GroupInterface[]>(['groups']);
+      if (groupsNow) {
+        const updatedGroups = groupsNow.map((g) => ({
+          ...g,
+          students: (g.students ?? []).filter((s) => s.id !== studentId),
+        }));
+        queryClient.setQueryData<GroupInterface[]>(['groups'], updatedGroups);
+      }
     },
     // onSettled: (data, error, variables, context) => {
     //   // вызывается после выполнения запроса в случаи удачи или ошибке
