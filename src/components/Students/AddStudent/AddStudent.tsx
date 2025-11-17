@@ -2,6 +2,7 @@
 
 import { useForm } from 'react-hook-form';
 import useGroups from '@/hooks/useGroups';
+import styles from './AddStudent.module.scss';
 
 interface AddStudentFormValues {
   firstName: string;
@@ -28,25 +29,54 @@ const AddStudent = ({ onSubmit }: Props): React.ReactElement => {
   };
 
   return (
-    <form onSubmit={handleSubmit(submitHandler)}>
-      <input placeholder="Фамилия" {...register('lastName', { required: true })} />
-      <input placeholder="Имя" {...register('firstName', { required: true })} />
-      <input placeholder="Отчество" {...register('middleName', { required: true })} />
-      {groups.length > 0 ? (
-        <select {...register('groupId', { required: true })}>
-          {groups.map((group) => (
-            <option key={group.id} value={group.id}>
-              {group.name}
-            </option>
-          ))}
-        </select>
-      ) : (
-        <select disabled>
-          <option>Нет доступных групп</option>
-        </select>
-      )}
-      <button type="submit" disabled={groups.length === 0}>Добавить</button>
-    </form>
+    <div className={styles.AddStudent}>
+      <h3>Добавить нового студента</h3>
+      <form className={styles.Form} onSubmit={handleSubmit(submitHandler)}>
+        <div className={styles.InputGroup}>
+          <label htmlFor="lastName">Фамилия</label>
+          <input 
+            id="lastName"
+            placeholder="Введите фамилию" 
+            {...register('lastName', { required: true })} 
+          />
+        </div>
+        <div className={styles.InputGroup}>
+          <label htmlFor="firstName">Имя</label>
+          <input 
+            id="firstName"
+            placeholder="Введите имя" 
+            {...register('firstName', { required: true })} 
+          />
+        </div>
+        <div className={styles.InputGroup}>
+          <label htmlFor="middleName">Отчество</label>
+          <input 
+            id="middleName"
+            placeholder="Введите отчество" 
+            {...register('middleName', { required: true })} 
+          />
+        </div>
+        <div className={styles.InputGroup}>
+          <label htmlFor="groupId">Группа</label>
+          {groups.length > 0 ? (
+            <select id="groupId" {...register('groupId', { required: true })}>
+              {groups.map((group) => (
+                <option key={group.id} value={group.id}>
+                  {group.name}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <select id="groupId" disabled>
+              <option>Нет доступных групп</option>
+            </select>
+          )}
+        </div>
+        <button className={styles.Button} type="submit" disabled={groups.length === 0}>
+          Добавить студента
+        </button>
+      </form>
+    </div>
   );
 };
 

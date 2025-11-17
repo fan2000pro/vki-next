@@ -1,13 +1,26 @@
 .BackNavigation {
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   
   a {
-    color: var(--color);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--primary);
     text-decoration: none;
     font-size: 16px;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
     
     &:hover {
-      text-decoration: underline;
+      background-color: var(--primary-light);
+      transform: translateX(-4px);
+    }
+    
+    &::before {
+      content: '←';
+      font-size: 18px;
     }
   }
 }

@@ -2,16 +2,39 @@
   display: flex;
   background-color: var(--background2);
   justify-content: flex-start;
-  gap: 40px;
+  gap: 8px;
   align-items: center;
-  font-size: 18px;
+  font-size: 16px;
   color: var(--color);
+  padding: 0 8px;
+  
+  > div {
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background-color: var(--background3);
+    }
+  }
+  
   a {
     color: var(--color);
     text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+    
+    &:hover {
+      color: var(--primary);
+    }
   }
 }
 
 .linkActive {
-  text-decoration: underline;
+  background-color: var(--primary-light) !important;
+  
+  a {
+    color: var(--primary);
+    font-weight: 600;
+  }
 }

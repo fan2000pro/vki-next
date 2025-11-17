@@ -24,7 +24,7 @@ const Groups = (): React.ReactElement => {
               </ul>
             </div>
           ) : (
-            <p>Нет студентов в группе</p>
+            <div className={styles.EmptyState}>Нет студентов в группе</div>
           )}
         </div>
       ))}

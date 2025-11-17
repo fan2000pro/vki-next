@@ -2,6 +2,10 @@
 
 .Main {
   display: flex;
-  min-height: calc(100vh - 180px);
-  padding: 20px main.$webSidePadding;
+  flex-direction: column;
+  min-height: calc(100vh - 150px);
+  padding: 32px main.$webSidePadding;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
 }
