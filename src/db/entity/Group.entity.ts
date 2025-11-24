@@ -1,5 +1,4 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { Student } from './Student.entity';
 
 @Entity()
 export class Group {
@@ -12,6 +11,10 @@ export class Group {
   @Column()
   contacts!: string;
 
-  @OneToMany(() => Student, (student) => student.group)
-  students!: Student[];
+  @OneToMany(() => {
+    // Ленивая загрузка класса Student для избежания циклической зависимости
+    const StudentEntity = require('./Student.entity');
+    return StudentEntity.Student;
+  }, (student: any) => student.group)
+  students!: any[];
 }

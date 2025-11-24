@@ -1,5 +1,4 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
-import { Group } from './Group.entity';
 
 @Entity()
 export class Student {
@@ -21,7 +20,11 @@ export class Student {
   @Column()
   groupId!: number;
 
-  @ManyToOne(() => Group, (group) => group.students)
+  @ManyToOne(() => {
+    // Ленивая загрузка класса Group для избежания циклической зависимости
+    const GroupEntity = require('./Group.entity');
+    return GroupEntity.Group;
+  }, (group: any) => group.students)
   @JoinColumn({ name: 'groupId' })
-  group!: Group;
+  group!: any;
 }
