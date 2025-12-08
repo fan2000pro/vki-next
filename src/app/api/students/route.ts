@@ -1,6 +1,8 @@
 import { addStudentDb, getStudentsDb, getStudentByIdDb } from '@/db/studentDb';
+import { dbInit } from '@/db/AppDataSource';
 
 export async function GET(): Promise<Response> {
+  await dbInit();
   const students = await getStudentsDb();
 
   return new Response(JSON.stringify(students), {
@@ -12,6 +14,7 @@ export async function GET(): Promise<Response> {
 
 export async function POST(request: Request): Promise<Response> {
   // try {
+    await dbInit();
     const body = await request.json();
     const { firstName, lastName, middleName, groupId } = body ?? {};
 
