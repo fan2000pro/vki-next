@@ -1,7 +1,7 @@
-import { addRandomStudentsDb } from '@/db/studentDb';
+import { studentService } from '@/services/StudentService';
 
-export async function POST(): Promise<Response> {
-  const students = await addRandomStudentsDb();
+export async function GET(): Promise<Response> {
+  const students = await studentService.addRandomStudents();
 
   return new Response(JSON.stringify(students), {
     headers: {

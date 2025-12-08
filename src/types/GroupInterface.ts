@@ -1,6 +1,7 @@
 interface GroupInterface {
   id: number;
   name: string;
+  contacts: string;
   students?: Array<{
     id: number;
     firstName: string;

@@ -1,11 +1,9 @@
 import { dbInit } from '@/db/AppDataSource';
-import { groupService } from '@/services/GroupService';
 
 export async function GET(): Promise<Response> {
   await dbInit();
-  const groups = await groupService.getGroups();
 
-  return new Response(JSON.stringify(groups), {
+  return new Response(JSON.stringify({ dbInit: 'done' }), {
     headers: {
       'Content-Type': 'application/json',
     },
